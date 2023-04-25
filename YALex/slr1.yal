@@ -1,0 +1,45 @@
+(* Lexer para Gramática *)
+
+(* Introducir cualquier header aqui *)
+
+let digit = 0|1|2|3|4|5|6|7|8|9
+let letter = a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z
+let negative = -
+let period = .
+let equals = =
+let sum = +
+let multiplication = *
+let number = negative?digit(digit)@
+let hex_number = digit(digit)@(a|b|c|d|e|f|A|B|C|D|E|F)
+let floating_point_number = digit(digit)@(period)digit(digit)@
+let power = ^
+let power_number = digit(digit)@((period)digit(digit)@)?(power)digit(digit)@
+let if = if
+let for = for
+let while = while
+let quotation_mark = "
+let space = ,
+let quote = quotation_mark(letter|digit|space)@quotation_mark
+
+
+rule tokens =
+  digit			{ print("digit\n") } (* Cambie por una acción válida, que devuelva el token *)
+  | letter			{ print("letter\n") }
+  | period			{ print("period\n") }
+  | number			{ print("number\n") }
+  | power			{ print("power\n") }
+  | power_number			{ print("power_number\n") }
+  | hex_number			{ print("hex_number\n") }
+  | floating_point_number			{ print("floating_point_number\n") }
+  | negative			{ print("negative\n") }
+  | equals			{ print("equals\n") }
+  | sum			{ print("sum\n") }
+  | multiplication			{ print("multiplication\n") }
+  | if	{ print("if\n") }
+  | for	{ print("for\n") }
+  | while	{ print("while\n") }
+  | quotation_mark	{ print("quotation_mark\n") }
+  | space	{ print("space\n") }
+  | quote	{ print("quote\n") }
+  
+(* Introducir cualquier trailer aqui *)
