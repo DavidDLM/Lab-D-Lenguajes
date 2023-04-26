@@ -112,7 +112,7 @@ class TokenCompiler:
         for token in fileTokens.tokens:
             if token[2]:
                 joinTokens.append((token[0], token[1], token[2]))
-            if not token[2]:
+            else:
                 operators = []
                 regex_splitted = re.findall('\w+|[?()|\-=@#%+*"]', token[1])
                 operators.extend(regex_splitted)
