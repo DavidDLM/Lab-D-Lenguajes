@@ -79,25 +79,27 @@ class ShuntingYard:
         this.post_result = ""
 
     def concatenation(this, regex):
-        regLen = len(regex)-1
+        reg_len = len(regex) - 1
         symbols = set(["(", "|", "?", "#", "%", "@", ")"])
         result = []
-        for i in range(regLen):
+        for i in range(reg_len):
             result.append(regex[i])
             if regex[i] not in symbols and (regex[i+1] not in symbols or regex[i+1] == '('):
                 result.append("%")
-            elif regex[i] in {"@", "?", ")"} and regex[i+1] == "(":
-                result.append("%")
-            elif regex[i] in {"@", "?", "#", ")"} and regex[i+1] not in symbols:
-                result.append("%")
-        result.append(regex[regLen])
+            else:
+                case = {
+                    regex[i] in {"@", "?", ")"} and regex[i+1] == "(": "%",
+                    regex[i] in {"@", "?", "#", ")"} and regex[i+1] not in symbols: "%",
+                }.get(True, "")
+                result.append(case)
+        result.append(regex[reg_len])
         return "".join(result)
 
     def revision(this, char):
         try:
             a = this.PRECEDENCE[char]
             b = this.PRECEDENCE[this.stack.peek()]
-            return True if a <= b else False
+            return a <= b if a >= 0 and b >= 0 else False
         except KeyError:
             return False
 
